@@ -1,0 +1,121 @@
+@charset "utf-8";
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, main, menu, nav, section, summary,
+time, mark, audio, video{
+  margin:0;
+  padding:0;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,main,menu,nav,section{
+  display:block;
+}
+
+html{
+  -webkit-text-size-adjust: 100%;
+}
+
+img{
+  border: 0;
+}
+
+ul,ol{
+  list-style-type: none;
+}
+
+table {
+  border-collapse: collapse; 
+  border-spacing: 0;
+}
+
+img, input, select, textarea { 
+  vertical-align: middle;
+}
+/* 
+.title {
+  font-family: 'Dotum';
+} */
+
+html {
+  background-color: rgb(231, 248, 239);
+}
+
+.one {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.two {
+  text-align: center;
+}
+
+.newRegister {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  padding-left: 20%;
+  position: absolute;
+  top:80px;
+  right: 40px;
+}
+
+.email {
+  font-size: 8px;
+  margin-right: 128px;
+}
+
+.password {
+  font-size: 8px;
+  margin-right: 128px;
+}
+
+
+input {
+  border: 0px none;
+  border-bottom: 2px rgba(0, 0, 0, 0.3) double;
+}
+
+.mainText {
+  background-color: #fff;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-top: 4px;
+  padding-bottom: 8px;
+}
+
+.alert {
+  margin-top: 16px;
+  font-size: 8px;
+  padding-right: 56px;
+  padding-left: 56px;
+}
+
+.link {
+  font-size: 5pt;
+  text-align: right;
+  margin-right: 16pt;
+}
+
+.btn-border {
+  margin-top: 4px;
+  border: 2px solid rgb(231, 248, 239);
+  border-radius: 0;
+  background: #fff;
+}
+
+.btn-border:hover {
+  color: black;
+  background:  rgb(231, 248, 239);
+  
+}
+
+
