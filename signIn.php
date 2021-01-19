@@ -48,28 +48,30 @@ if(!empty($_POST)) {
   <title>大学生のための六法全書/Login</title>
   <meta name="description" content="指定の法令だけを登録、保存できるWebサービスです。">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
   <link rel="apple-touch-icon" href="">
   <link rel="icon" sizes="192*192" href="">
   </head>
   <body>
-    <h1>大学生のための六法全書</h1>
-    <p>利用するために、ログインをお願いします。</p>
+    <div class="one">
+      <h1>Compendium Of Laws</h1>
+      <h2>For University Student</h2>
+    </div>
 
-    <h2>ログイン</h2>
-    <form  action="" method="post">
-      <table>
-        <tr>
-          <th><label for="email">email</label></th>
-          <th><input type="email" name="email"></th>
-        </tr> 
-          <th><label for="password">password</label></th>
-          <th><input type="password" name="password"></th>
-        </tr>
-      </table>
-      <button type="submit">Sign In!</button>
-    </form>
-
-    <a href="signUp.php">初めての方はこちら</a>
+    <div class="mainText">
+      <h2 class="newRegister">ログイン</h2>
+      <div class="two">
+        <form  action="" method="post">
+        <label for="email" class="email">your email address</label><br>
+        <input type="email" name="email"><br>
+        <label for="password" class="password">your password</label><br>
+        <input type="password" name="password"><br>
+        <button type="submit" class="btn-border">Sign In!</button><br>
+        </form>
+      </div>
+    </div>
+    <div class="link"> 
+      <a href="signUp.php">初めての方はこちら</a>
+    </div>
   </body>
 </html>
