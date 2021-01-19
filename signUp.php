@@ -44,13 +44,14 @@ try{
     }
   }
   ?>
+
 <html lang="ja">
 <head>
   <meata charset="utf-8">
   <title>大学生のための六法全書/SignUp</title>
   <meta name="description" content="指定の法令だけを登録、保存できるWebサービスです。">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
   <link rel="apple-touch-icon" href="">
   <link rel="icon" sizes="192*192" href="">
 </head>
@@ -70,12 +71,14 @@ try{
       <input type="password" name="password"><br>
       <button type="submit" class="btn-border">Sign Up!</button><br>
       <?php if($error['email'] === 'duplicate'):?>
-      <p>指定されたメールアドレスは、既に登録されています。</p>
+      <p class="alert">指定されたメールアドレスは、既に登録されています。</p>
       <?php endif; ?>
       </form>
     </div>
   </div>
   <p class="alert">※パスワードは半角英数字をそれぞれ１文字以上含んだ、８文字以上で設定してください。</p>
   <div class="link">
-  <a href="signIn.php">ログインページ</a>
+    <a href="signIn.php">ログインページ</a>
   </div>
+</body>
+</html>
