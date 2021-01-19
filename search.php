@@ -49,22 +49,35 @@ $item = $_POST["item"] . "号";
   <title>大学生のための六法全書/Search</title>
   <meta name="description" content="指定の法令だけを登録、保存できるWebサービスです。">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
   <link rel="apple-touch-icon" href="">
   <link rel="icon" sizes="192*192" href="">
 </head>
 <body>
+  <div class="one">
+    <h1>Compendium Of Laws</h1>
+    <h2>For University Student</h2>
+  </div>
 
-<form action="register.php" method="post">
-  <p>―Search―</p>
-  第<input type="text" name="title" placeholder="五百十一">条<br>
-  <?php echo $error; ?>
-  　<input type="text" name="paragraph" placeholder="(全角数字)２">項<br>
-  　<input type="text" name="item" placeholder="(漢数字)三">号<br>
-  <input type="submit" value="検索する">
-
-</form>
+  <div class="mainText-search">
+    <p class="newRegister">―Search―</p>
+    <div class="two">
+      <form action="register.php" method="post">
+      <select name="lawName">
+        <option value="minpou">民法</option>
+      </select><br>
+      第<input type="text" name="title" placeholder="五百十一">条<br>
+      <?php echo $error; ?>
+      　<input type="text" name="paragraph" placeholder="(全角数字)２">項<br>
+      　<input type="text" name="item" placeholder="(漢数字)三">号<br>
+      <input  class="btn-border" type="submit" value="Let's search it!">
+      </form>
+    </div>
+  </div>
+<hr>
+  <a href="list.php">一覧ページへ</a>
 
 
 </body>
 </html>
+
