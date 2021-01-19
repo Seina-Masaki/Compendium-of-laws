@@ -1,14 +1,3 @@
-
-<html lang="ja">
-<head>
-  <meata charset="utf-8">
-  <title>大学生のための六法全書/SignUp</title>
-  <meta name="description" content="指定の法令だけを登録、保存できるWebサービスです。">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="apple-touch-icon" href="">
-  <link rel="icon" sizes="192*192" href="">
-</head>
 <?php
 
 // データベース接続
@@ -126,7 +115,7 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
   $stmt -> execute();
   foreach($stmt as $row) {
     if($row["title"] != "") {
-      echo $row["title"] . "<br>";
+      // echo $row["title"] . "<br>";
       $text[] = $row["title"];
     }
     if($_POST["paragraph"] == "１") {
@@ -170,7 +159,7 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
       $text[] = $row["paragraphSentence_ten"];
     } 
   }
-  $sentence = "以下の条文を追加しました。";
+  $sentence = "以上の条文を追加しました。";
   // 条数を指定
 } elseif(!empty($_POST["title"])) {
   $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
@@ -261,27 +250,23 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
       $text[] = $row["itemSentence_ten"];
     }
   }
-  $sentence = "以下の条文を追加しました。";
+  $sentence = "以上の条文を追加しました。";
 } elseif(!empty($_POST["paragraph"]) && !empty($_POST["item"])) {
-  echo "条数が入力されていません";
+  $sentence = "条数が入力されていません";
 } elseif(!empty($_POST["item"])) {
-  echo "条数または項数が入力されていません";
-} elseif(empty($_POST["title"]) && empty($_POST["paragraph"]) && empty($_POST["item"])) {
-  echo "正しく入力してください";
+  $sentence = "条数または項数が入力されていません";
+} elseif(empty($_POST["title"]) && empty($_POST["paragraph"]) && empty($_POST["item"]) && !empty($_POST["lawName"])) {
+  $sentence = "正しく入力してください";
+  var_dump($_POST["lawName"]);
 }
 
-
-?>
-
-<p><?php echo $sentence; ?></p>
-
-<?php
-foreach($text as $value) {
-  echo $value . "<br>";
+// データベースに登録する法令を変数で定義
+if($_POST["lawName"] != "") {
+  $lawName = $_POST["lawName"];
+  if($lawName == "minpou") {
+    $lawName = "民法";
+  }
 }
-?>
-
-<?php
 if($text[0] != "") {
   $title = $text[0];
 } else {
@@ -382,13 +367,14 @@ session_start();
 // echo $_SESSION['id'];
 
 
-$sql = ('INSERT INTO myroppou (title, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, recognize) VALUES (:title, :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen, :fourteen, :fifteen, :sixteen, :seventeen, :eighteen, :recognize)');
+$sql = ('INSERT INTO myroppou (lawName, title, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, recognize) VALUES (:lawName, :title, :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen, :fourteen, :fifteen, :sixteen, :seventeen, :eighteen, :recognize)');
 
 $dsn = 'mysql:dbname=roppou;host=localhost;port=8889;charset=utf8';
 $user = 'root';
 $password = 'root';
 $dbh = new PDO($dsn, $user, $password);
 $sth = $dbh -> prepare($sql);
+$sth ->bindParam(':lawName', $lawName, PDO::PARAM_STR);
 $sth ->bindParam(':title', $title, PDO::PARAM_STR);
 $sth ->bindParam(':one', $one, PDO::PARAM_STR);
 $sth ->bindParam(':two', $two, PDO::PARAM_STR);
@@ -413,23 +399,35 @@ $sth -> execute();
 
 ?>
 
+<html lang="ja">
+<head>
+  <meata charset="utf-8">
+  <title>大学生のための六法全書/SignUp</title>
+  <meta name="description" content="指定の法令だけを登録、保存できるWebサービスです。">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="apple-touch-icon" href="">
+  <link rel="icon" sizes="192*192" href="">
+</head>
+<body>
+  <div class="one">
+    <h1>Compendium Of Laws</h1>
+    <h2>For University Student</h2>
+  </div>
+  <div class="mainText-search">
+    <h2 class="newRegister"><?php echo $lawName;?></h2>
+    <div class="two">
+      <?php foreach($text as $value): ?>
+      <p class="lawText"><?php echo $value ?></p>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <p class="lawText-sub"><?php echo $sentence; ?></p>
 <hr>
 <a href="list.php">一覧ページへ</a>／
 <a href="search.php">検索ページへ</a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
+
+
+
