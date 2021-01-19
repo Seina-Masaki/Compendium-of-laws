@@ -47,7 +47,8 @@ img, input, select, textarea {
 } */
 
 html {
-  background-color: rgb(231, 248, 239);
+/*   background-color: rgb(231, 248, 239); */
+    background-color: rgb(20, 32, 26);
 }
 
 .one {
