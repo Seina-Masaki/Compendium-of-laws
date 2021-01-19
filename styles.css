@@ -48,7 +48,15 @@ img, input, select, textarea {
 
 html {
   background-color: rgb(231, 248, 239);
+  /* background-color: rgb(20, 32, 26); */
 }
+
+body {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
 
 .one {
   text-align: center;
@@ -59,14 +67,6 @@ html {
   text-align: center;
 }
 
-.newRegister {
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.5);
-  padding-left: 20%;
-  position: absolute;
-  top:80px;
-  right: 40px;
-}
 
 .email {
   font-size: 8px;
@@ -78,6 +78,12 @@ html {
   margin-right: 128px;
 }
 
+.newRegister {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.3);
+  position: relative;
+  top: -15px;
+}
 
 input {
   border: 0px none;
@@ -90,6 +96,16 @@ input {
   margin-right: 5%;
   padding-top: 4px;
   padding-bottom: 8px;
+  border-radius: 20px;
+}
+.mainText-search {
+  background-color: #fff;
+  margin-top: 16px;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-top: 4px;
+  padding-bottom: 8px;
+  border-radius: 20px;
 }
 
 .alert {
@@ -106,16 +122,42 @@ input {
 }
 
 .btn-border {
-  margin-top: 4px;
+  color: rgba(0, 0, 0, 0.5);;
+  width: 160px;
+  height: 32px;
+  margin-top: 16px;
+  margin-bottom: 12px;
   border: 2px solid rgb(231, 248, 239);
-  border-radius: 0;
+  border-radius: 40px;
   background: #fff;
 }
 
 .btn-border:hover {
   color: black;
   background:  rgb(231, 248, 239);
-  
+  cursor: pointer;
 }
 
+.lawText {
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 12px;
+}
+
+.lawText-sub {
+  margin-top: 6px;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 12px;
+  text-align: right;
+}
+ 
+@media screen and (min-width: 600px) {
+  html {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  body {
+    width: 100%;
+  }
+}
 
