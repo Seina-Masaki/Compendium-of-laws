@@ -98,7 +98,7 @@ function lawvalue($lawstr) {
 <body>
 
 <script>
-  $(function() {
+$(function() {
   let tabs = $(".tab"); // tabのクラスを全て取得し、変数tabsに配列で定義
   $(".tab").on("click", function() { // tabをクリックしたらイベント発火
     $(".active").removeClass("active"); // activeクラスを消す
@@ -113,22 +113,24 @@ function lawvalue($lawstr) {
   <h1>Compendium Of Laws</h1>
   <h2>For University Student</h2>
 </div>
-
+<!-- ――――――――――――――――――――――
+―――――――――更新！――――――――――
+―――――――――――――――――――――― -->
 <div class="tab-area">
   <div class="tab active">
     民法
   </div>
   <div class="tab">
-    (刑法)
+    刑法
+  </div>
+  <div class="tab">
+    民訴
+  </div>
+  <div class="tab">
+    刑訴
   </div>
   <div class="tab">
     (憲法)
-  </div>
-  <div class="tab">
-    (民訴)
-  </div>
-  <div class="tab">
-    (刑訴)
   </div>
 </div>
 <div class="content-area">
@@ -138,13 +140,19 @@ function lawvalue($lawstr) {
     ?>
   </div>
   <div class="content">
-    
+  <?php
+    lawvalue('刑法');
+  ?>
   </div>
   <div class="content">
-    
+  <?php
+    lawvalue('民訴');
+  ?>
   </div>
   <div class="content">
-    
+  <?php
+    lawvalue('刑訴');
+  ?>
   </div>
   <div class="content">
     
