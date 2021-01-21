@@ -17,10 +17,11 @@ if(preg_match("/の/",$_POST["title"])){
 }
 $paragraph = $_POST["paragraph"] . "項";
 $item = $_POST["item"] . "号";
+$lawName = $_POST["lawName"];
 
 // 条数・項数・号数を指定
 if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item"])) {
-  $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
+  $stmt = $pdo -> prepare("SELECT * FROM $lawName WHERE title LIKE '%" . $title . "%' ");
   $stmt -> execute();
   foreach($stmt as $row) {
     if($row["title"] != "") {
@@ -111,7 +112,7 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
   $sentence = "以下の条文を追加しました。";
   // 条数・項数を指定
 } elseif(!empty($_POST["title"]) && !empty($_POST["paragraph"])) {
-  $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
+  $stmt = $pdo -> prepare("SELECT * FROM $lawName WHERE title LIKE '%" . $title . "%' ");
   $stmt -> execute();
   foreach($stmt as $row) {
     if($row["title"] != "") {
@@ -162,7 +163,7 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
   $sentence = "以上の条文を追加しました。";
   // 条数を指定
 } elseif(!empty($_POST["title"])) {
-  $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
+  $stmt = $pdo -> prepare("SELECT * FROM $lawName WHERE title LIKE '%" . $title . "%' ");
   $stmt -> execute();
   foreach($stmt as $row) {
     if($row["title"] != "") {
@@ -250,7 +251,7 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
       $text[] = $row["itemSentence_ten"];
     }
   }
-  $sentence = "以上の条文を追加しました。";
+  $sentence = "上記の条文を追加しました。";
 } elseif(!empty($_POST["paragraph"]) && !empty($_POST["item"])) {
   $sentence = "条数が入力されていません";
 } elseif(!empty($_POST["item"])) {
@@ -263,8 +264,20 @@ if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item
 // データベースに登録する法令を変数で定義
 if($_POST["lawName"] != "") {
   $lawName = $_POST["lawName"];
+  // ーーーーーーーーーーーーー――
+  // ――――――更新！――――――
+  // ―――――――――――――――
   if($lawName == "minpou") {
     $lawName = "民法";
+  }
+  if($lawName == "keiho") {
+    $lawName = "刑法";
+  }
+  if($lawName == "minso") {
+    $lawName = "民訴";
+  }
+  if($lawName == "keiso") {
+    $lawName = "刑訴";
   }
 }
 if($text[0] != "") {
@@ -396,7 +409,6 @@ $sth ->bindParam(':seventeen', $seventeen, PDO::PARAM_STR);
 $sth ->bindParam(':eighteen', $eighteen, PDO::PARAM_STR);
 $sth ->bindParam(':recognize', $_SESSION['id'], PDO::PARAM_INT);
 $sth -> execute();
-
 ?>
 
 <html lang="ja">
@@ -428,6 +440,5 @@ $sth -> execute();
 <a href="search.php">検索ページへ</a>
 </body>
 </html>
-
 
 
