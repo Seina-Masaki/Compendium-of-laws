@@ -15,15 +15,20 @@ try{
   echo '接続エラー'.$e->getMessage();
 }
 
-$xml = simplexml_load_file("https://elaws.e-gov.go.jp/api/1/lawdata/明治二十九年法律第八十九号");
+// $xml = simplexml_load_file("https://elaws.e-gov.go.jp/api/1/lawdata/明治二十九年法律第八十九号");
+$xml = simplexml_load_file("https://elaws.e-gov.go.jp/api/1/lawdata/昭和二十三年法律第百三十一号");
 
 
+// ――――――――――――――――――――
+// ――――――――更新――――――――――
+// ――――――――――――――――――――
+$law = "keiso";
 $i = "1";
 foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part) {
   foreach($Part->Chapter as $Chapter) {
     foreach($Chapter->Article as $Article) {
       // 条数
-      $filename = "roppou$i.txt";
+      $filename = "$law"."$i.txt";
       $fp = fopen($filename, "a+");
       $ArticleTitle = $Article->ArticleTitle . PHP_EOL;
       fwrite($fp, $ArticleTitle);
@@ -63,7 +68,6 @@ foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part)
 }
 fclose($fp);
 
-// $i = "194";
 foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part) {
   foreach($Part->Chapter as $Chapter) {
     // 章数
@@ -73,7 +77,7 @@ foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part)
       // echo $Section->SectionTitle."<br>";
       foreach($Section->Article as $Article) {
         // 条数
-        $filename = "roppou$i.txt";
+        $filename = "$law"."$i.txt";
         $fp = fopen($filename, "a+");
         $ArticleTitle = $Article->ArticleTitle . PHP_EOL;
         fwrite($fp, $ArticleTitle);
@@ -120,7 +124,7 @@ foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part)
         foreach($Subsection->Article as $Article) {
           foreach($Article->ArticleTitle as $ArticleTitle) {
             // 条数
-            $filename = "roppou$i.txt";
+            $filename = "$law"."$i.txt";
             $fp = fopen($filename, "a+");
             $ArticleTitle = $Article->ArticleTitle . PHP_EOL;
             fwrite($fp, $ArticleTitle);
@@ -170,7 +174,7 @@ foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part)
           foreach($Division->Article as $Article) {
             foreach($Article->ArticleTitle as $ArticleTitle) {
               // 条数
-              $filename = "roppou$i.txt";
+              $filename = "$law"."$i.txt";
               $fp = fopen($filename, "a+");
               $ArticleTitle = $Article->ArticleTitle . PHP_EOL;
               fwrite($fp, $ArticleTitle);
@@ -213,9 +217,47 @@ foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part)
 }
 fclose($fp);
 
-
-
-
+foreach($xml->ApplData->LawFullText->Law->LawBody->MainProvision->Part as $Part) {
+  foreach($Part->Article as $Article) {
+    foreach($Article->ArticleTitle as $ArticleTitle) {
+      // 条数
+      $filename = "$law"."$i.txt";
+      $fp = fopen($filename, "a+");
+      $ArticleTitle = $Article->ArticleTitle . PHP_EOL;
+      fwrite($fp, $ArticleTitle);
+      echo $ArticleTitle;
+      foreach($Article->Paragraph as $Paragraph) {
+        // 項数
+        if($Paragraph->ParagraphNum >= "2") {
+          $ParagraphNum = $Paragraph->ParagraphNum . "項 ";
+        } else {
+          $ParagraphNum = $Paragraph->ParagraphNum;
+        }
+        fwrite($fp, $ParagraphNum);
+        echo $ParagraphNum;
+        foreach($Paragraph->ParagraphSentence as $ParagraphSentence) {
+          // 項文または条文
+          $Sentence = $ParagraphSentence->Sentence . PHP_EOL;
+          fwrite($fp, $Sentence);
+          echo $Sentence . "<br>";
+          foreach($Paragraph->Item as $Item) {
+            // 号数
+            $ItemTitle = $Item->ItemTitle . "号 ";
+            fwrite($fp, $ItemTitle);
+            echo $ItemTitle;
+            foreach($Item->ItemSentence as $ItemSentence) {
+              // 号文
+              $Sentence = $ItemSentence->Sentence . PHP_EOL;
+              fwrite($fp, $Sentence);
+              echo $Sentence . "<br>";
+            }
+          }
+        }
+      }
+      $i += "1";
+    }
+  }
+}
 
 ?> 
 
