@@ -15,8 +15,34 @@ try{
 } catch(PDOException $e) {
   echo '接続エラー'.$e->getMessage();
 }
-
-$xml = simplexml_load_file("https://elaws.e-gov.go.jp/api/1/lawdata/明治二十九年法律第八十九号");
+// ――――――――――――――――――
+// ―――――――更新―――――――――
+// ――――――――――――――――――
+$sql = "CREATE TABLE IF NOT EXISTS keiso"
+."("
+."title TEXT,"
+."sentence TEXT,"
+."paragraphSentence_two TEXT,"
+."paragraphSentence_three TEXT,"
+."paragraphSentence_four TEXT,"
+."paragraphSentence_five TEXT,"
+."paragraphSentence_six TEXT,"
+."paragraphSentence_seven TEXT,"
+."paragraphSentence_eight TEXT,"
+."paragraphSentence_nine TEXT,"
+."paragraphSentence_ten TEXT,"
+."itemSentence_one TEXT,"
+."itemSentence_two TEXT,"
+."itemSentence_three TEXT,"
+."itemSentence_four TEXT,"
+."itemSentence_five TEXT,"
+."itemSentence_six TEXT,"
+."itemSentence_seven TEXT,"
+."itemSentence_eight TEXT,"
+."itemSentence_nine TEXT,"
+."itemSentence_ten TEXT"
+.");";
+$stmt = $pdo -> query($sql);
 
 $title = "";
 $sentence = "";
@@ -40,11 +66,15 @@ $itemSentence_eight = "";
 $itemSentence_nine = "";
 $itemSentence_ten = "";
 
+// ―――――――――――――――――
+// ―――――――更新――――――――
+// ―――――――――――――――――
+$law = "keiso";
 $i = 1;
-$file = fopen("roppou$i.txt", "r");
+$file = fopen("$law"."$i.txt", "r");
 while($file) {
-  $file = fopen("roppou$i.txt", "r");
-  $filearr = file("roppou$i.txt");
+  $file = fopen("$law"."$i.txt", "r");
+  $filearr = file("$law"."$i.txt");
   if($file) {
     // 条数
     $title = $filearr[0];
@@ -175,9 +205,10 @@ while($file) {
   }
   fclose($file);
   $i += 1;
-
-  
-  $sql = ('INSERT INTO minpou (title, sentence, paragraphSentence_two, paragraphSentence_three, paragraphSentence_four, paragraphSentence_five, paragraphSentence_six, paragraphSentence_seven, paragraphSentence_eight, paragraphSentence_nine, paragraphSentence_ten, itemSentence_one, itemSentence_two, itemSentence_three, itemSentence_four, itemSentence_five, itemSentence_six, itemSentence_seven, itemSentence_eight, itemSentence_nine, itemSentence_ten) VALUES (:title, :sentence, :paragraphSentence_two, :paragraphSentence_three, :paragraphSentence_four, :paragraphSentence_five, :paragraphSentence_six, :paragraphSentence_seven, :paragraphSentence_eight, :paragraphSentence_nine, :paragraphSentence_ten, :itemSentence_one, :itemSentence_two, :itemSentence_three, :itemSentence_four, :itemSentence_five, :itemSentence_six, :itemSentence_seven, :itemSentence_eight, :itemSentence_nine, :itemSentence_ten)');
+// ――――――――――――――――――――
+// ――――――――更新――――――――――
+// ――――――――――――――――――――
+  $sql = ('INSERT INTO keiso (title, sentence, paragraphSentence_two, paragraphSentence_three, paragraphSentence_four, paragraphSentence_five, paragraphSentence_six, paragraphSentence_seven, paragraphSentence_eight, paragraphSentence_nine, paragraphSentence_ten, itemSentence_one, itemSentence_two, itemSentence_three, itemSentence_four, itemSentence_five, itemSentence_six, itemSentence_seven, itemSentence_eight, itemSentence_nine, itemSentence_ten) VALUES (:title, :sentence, :paragraphSentence_two, :paragraphSentence_three, :paragraphSentence_four, :paragraphSentence_five, :paragraphSentence_six, :paragraphSentence_seven, :paragraphSentence_eight, :paragraphSentence_nine, :paragraphSentence_ten, :itemSentence_one, :itemSentence_two, :itemSentence_three, :itemSentence_four, :itemSentence_five, :itemSentence_six, :itemSentence_seven, :itemSentence_eight, :itemSentence_nine, :itemSentence_ten)');
   
   $dsn = 'mysql:dbname=roppou;host=localhost;port=8889;charset=utf8';
   $user = 'root';
@@ -228,7 +259,7 @@ while($file) {
   $itemSentence_eight = "";
   $itemSentence_nine = "";
   $itemSentence_ten = "";
-// }    
+}    
 
 
 ?>
