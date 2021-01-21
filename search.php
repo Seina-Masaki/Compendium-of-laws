@@ -12,10 +12,6 @@ try{
 session_start();
 // echo $_SESSION['id'];
 
-if(!empty($_POST["paragraph"])) {
-  $_POST["paragraph"] = mb_convert_kana($_POST["paragraph"], "N");
-}
-
 if(preg_match("/の/",$_POST["title"])){
   $title = "第" . $_POST["title"];
 } else {
@@ -24,19 +20,20 @@ if(preg_match("/の/",$_POST["title"])){
 $paragraph = $_POST["paragraph"] . "項";
 $item = $_POST["item"] . "号";
 
-// if(is_numeric($_POST["title"])) {
-  //   $error = "漢数字で入力してください。" . "<br>";
+// データベースに接続するテーブルを定義
+$lawName = $_POST["lawName"];
+
   // 条数・項数・号数を指定
   if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item"])) {
-  $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
+  $stmt = $pdo -> prepare("SELECT * FROM $lawName WHERE title LIKE '%" . $title . "%' ");
   $stmt -> execute();
   // 条数・項数を指定
   } elseif(!empty($_POST["title"]) && !empty($_POST["paragraph"])) {
-  $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
+  $stmt = $pdo -> prepare("SELECT * FROM $lawName WHERE title LIKE '%" . $title . "%' ");
   $stmt -> execute();
   // 条数を指定
   } elseif(!empty($_POST["title"])) {
-  $stmt = $pdo -> prepare("SELECT * FROM minpou WHERE title LIKE '%" . $title . "%' ");
+  $stmt = $pdo -> prepare("SELECT * FROM $lawName WHERE title LIKE '%" . $title . "%' ");
   $stmt -> execute();
   } 
 // }
@@ -49,7 +46,7 @@ $item = $_POST["item"] . "号";
   <title>大学生のための六法全書/Search</title>
   <meta name="description" content="指定の法令だけを登録、保存できるWebサービスです。">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
   <link rel="apple-touch-icon" href="">
   <link rel="icon" sizes="192*192" href="">
 </head>
@@ -63,8 +60,14 @@ $item = $_POST["item"] . "号";
     <p class="newRegister">―Search―</p>
     <div class="two">
       <form action="register.php" method="post">
-      <select name="lawName">
+      <select class="select" name="lawName">
+      <!-- ―――――――更新―――――――― -->
+      <!-- ―――――――更新―――――――― -->
+      <!-- ―――――――更新―――――――― -->
         <option value="minpou">民法</option>
+        <option value="keiho">刑法</option>
+        <option value="minso">民訴</option>
+        <option value="keiso">刑訴</option>
       </select><br>
       第<input type="text" name="title" placeholder="五百十一">条<br>
       <?php echo $error; ?>
