@@ -4,20 +4,104 @@
 require_once('config.php');
 
 try{
-  $pdo = new PDO(DSN, DB_USER, DB_PASS);
+  $pdo = new PDO(DSN, DB_USER, DB_PASS, DRIVER_OPT);
   // echo "接続おけ  <br>";
 } catch(PDOException $e) {
   // echo '接続エラー'.$e->getMessage();
 }
 
-if(preg_match("/の/",$_POST["title"])){
-  $title = "第" . $_POST["title"];
-} else {
-  $title = "第" . $_POST["title"] . "条";
+session_start();
+
+function kansujiEncoding ($num)
+{
+    $num     = (int)$num;
+    $kansuji = '';
+
+    if ($num === 0) {
+        return '零';
+    }
+
+    $valueNum = strlen($num);
+    $whileNum = 0;
+
+    while ($valueNum) {
+        $whileNum++;
+
+        // 桁
+        switch ($whileNum) {
+        case 2:
+            $kansuji = '十' . $kansuji;
+            break;
+        case 3:
+            $kansuji = '百' . $kansuji;
+            break;
+        case 4:
+            $kansuji = '千' . $kansuji;
+            break;
+        case 5:
+            $kansuji = '万' . $kansuji;
+            break;
+        case 6:
+            $kansuji = '十' . $kansuji;
+            break;
+        case 7:
+            $kansuji = '百' . $kansuji;
+            break;
+        case 8:
+            $kansuji = '千' . $kansuji;
+            break;
+        case 9:
+            $kansuji = '億' . $kansuji;
+            break;
+        case 10:
+            return 'むりぽ';
+            break;
+        }
+
+        $substrNum = (int)mb_substr($num, $valueNum -1, 1);
+
+        if ($substrNum === 1 && $whileNum === 1) {
+            $kansuji = '一';
+        }
+
+        // 数
+        switch ($substrNum) {
+        case 2:
+            $kansuji = '二' . $kansuji;
+            break;
+        case 3:
+            $kansuji = '三' . $kansuji;
+            break;
+        case 4:
+            $kansuji = '四' . $kansuji;
+            break;
+        case 5:
+            $kansuji = '五' . $kansuji;
+            break;
+        case 6:
+            $kansuji = '六' . $kansuji;
+            break;
+        case 7:
+            $kansuji = '七' . $kansuji;
+            break;
+        case 8:
+            $kansuji = '八' . $kansuji;
+            break;
+        case 9:
+            $kansuji = '九' . $kansuji;
+            break;
+        }
+
+        $valueNum--;
+    }
+
+    return $kansuji;
 }
-$paragraph = $_POST["paragraph"] . "項";
-$item = $_POST["item"] . "号";
+
 $lawName = $_POST["lawName"];
+$title = "第" . kansujiEncoding($_POST["title"]) . "条";
+$paragraph = mb_convert_kana($_POST["paragraph"], "N") . "項";
+$item = kansujiEncoding($_POST["item"]) . "号";
 
 // 条数・項数・号数を指定
 if(!empty($_POST["title"]) && !empty($_POST["paragraph"]) && !empty($_POST["item"])) {
@@ -376,7 +460,21 @@ if($text[18] != "") {
   $eighteen = "";
 }
 
-session_start();
+// $eng = one;
+// $eng = thirteen;
+
+// function eisujiEncoding ($eng)
+// {
+//   $eisuji = str_replace($eng, "one", $one);
+//                     // 1
+// }
+
+// $i = 0;
+// while($text[1] >= $i) {
+// $text[$i];
+//   $i++;
+// }
+
 // echo $_SESSION['id'];
 
 
@@ -440,5 +538,4 @@ $sth -> execute();
 <a href="search.php">検索ページへ</a>
 </body>
 </html>
-
 
